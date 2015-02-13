@@ -3,32 +3,43 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="2タップで帰宅難民を救うWEBサービス 「サヨナラ終電」で日本中の全ての酔っ払いに希望の道を！" />
+    <meta name="robots" content="index,follow" />
 
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" href="iOS7-iPad152_152.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@sayosyuden">
+    <meta name="twitter:title" content="サヨナラ終電">
+    <meta name="twitter:description" content="2タップで帰宅難民を救うWEBサービス 「サヨナラ終電」で日本中の全ての酔っ払いに希望の道を！">
 
+    <meta property="og:site_name" content="サヨナラ終電" />
+    <meta property="og:title" content="サヨナラ終電" />
+    <meta property="og:url" content="http://syuden.com/" />
+    <meta property="og:description" content="2タップで帰宅難民を救うWEBサービス 「サヨナラ終電」で日本中の全ての酔っ払いに希望の道を！" />
+    <meta property="og:image" content="images/logo.gif" />
+    <meta name="twitter:image:src" content="images/logo.gif" />
 
-	<link rel="stylesheet" href="lib/onsen/css/onsenui.css">
-	<link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css">
-	<script src="lib/onsen/js/angular/angular.js"></script>
-	<script src="lib/onsen/js/onsenui.js"></script>
-	<script>
-	  ons.bootstrap();
-	  ons.ready(function() {
-	    // Add another Onsen UI element
-	    var content = document.getElementById("#my-content");
-	    content.innerHTML="<ons-button>Another Button</ons-button>";
-	    ons.compile(content);
-	  });
-	</script>
-
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="iOS7-iPad152_152.png">
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css">
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css">
+    <script src="lib/onsen/js/angular/angular.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+    <script>
+        ons.bootstrap();
+        ons.ready(function() {
+            // Add another Onsen UI element
+                var content = document.getElementById("#my-content");
+                content.innerHTML="<ons-button>Another Button</ons-button>";
+                ons.compile(content);
+        });
+        </script>
     <link rel="stylesheet" href="css/style.css">
-
+    <title>サヨナラ終電</title>
 
 </head>
 <body>
-    <ons-sliding-menu var="app.slidingMenu" menu-page="menu.html" main-page="page1.html" side="right" type="overlay" max-slide-distance="200px">
+    <ons-sliding-menu var="app.slidingMenu" menu-page="menu.html" main-page="page1.html" side="right" type="overlay" max-slide-distance="200px"
     </ons-sliding-menu>
 </body>
 </html>
