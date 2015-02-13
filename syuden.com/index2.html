@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.browser.sp.js"></script>
+    <script>
+    //javascriptでget queryの値を取得する
+        var valMapType = 1;
+        valMapType = getParam();
+        //alert("Getパラメータ「key」の値は、"+  valMapType  +" です。");
+
+        function getParam() {
+            var url   = location.href;
+            parameters    = url.split("?");
+            params   = parameters[1].split("&");
+            var paramsArray = [];
+            for ( i = 0; i < params.length; i++ ) {
+                neet = params[i].split("=");
+                paramsArray.push(neet[0]);
+                paramsArray[neet[0]] = neet[1];
+            }
+            var categoryKey = paramsArray["key"];
+            return categoryKey;
+        }
+    </script>
+   
+    <script>//window の 位置確認
+      function resizeImage() {          
+          
+          if($.browser.ios ==true){//checked iPhone6+
+              var canvasHeight = window.innerHeight - 20 - 12;
+            $('#message_block').css('height','25px');
+
+          }else if($.browser.android ==true){
+              var canvasHeight = window.innerHeight - 20 - 12;
+            $('#message_block').css('height','25px');
+          }else{
+              var canvasHeight = window.innerHeight - 30 - 2;
+          }
+          var canvasWidth = window.innerWidth - 4;
+          $('#map_canvas').height(canvasHeight);
+          $('#map_canvas').width(canvasWidth);
+          $('#map_canvas').css('margin-left','2px');
+
+      }
+
+      $(function(){
+        resizeImage()
+      });
+      $(window).resize(function(){
+        resizeImage()
+      });
+    </script>
+    
+    <!-- GoogeMapsAPI を読み込む -->
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+    <script>
+        var map = null;
+        var infoWindow = null;
+        
+        $(function(){
+            window.onload = function()
+            {
+                onDeviceReady();
+            }
+
+        });
+        function onDeviceReady(){
+            //GPSセンサーにアクセスして現在位置情報を取得する
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            
+            
+        }
+        
+        //現在地の取得に成功した場合に呼び出される関数
+        function onSuccess(position){
+            //position に含まれる緯度経度情報を取得
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            
+            //緯度経度情報を元にLatLngオブジェクトを作成
+            var latlng = new google.maps.LatLng(latitude, longitude);
+            createMap(latlng);
+            
+        }
+        
+        //現在地の取得に失敗した時に呼び出される関数
+        function onError(error){
+            alert(error.message);
+        }
+        
+        //地図を作成する関数
+        function createMap(latlng){
+            //地図のオプション
+            var mapOption = {
+                zoom: 15,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            
+            //Mapオブジェクトを作成
+            map = new google.maps.Map($("#map_canvas").get(0), mapOption);
+            
+            //マーカーを現在位置に置く
+            var marker = new google.maps.Marker({ position: latlng, map: map });
+            getPlaceInfo(latlng);
+            
+        }
+ 
+ 
+        //google Maps API に付近情報のリクエストを出す関数
+        function getPlaceInfo(latlng){
+            //情報ウインドウ（吹き出し）を予め作成しておく
+            infoWindow = new google.maps.InfoWindow();
+            var plceName = ["","カプセルホテル","マン喫","居酒屋","カラオケ"];                        
+            $("#message").replaceWith("<a href='index.html' class='map_messege'>検索場所は、"+  plceName[valMapType]  +" です。</a>");
+      
+            //現在地の半径500m内にあるカフェ情報をリクエスト
+            var request = {
+                location:latlng,
+                radius:"500",
+                //rankBy : google.maps.places.RankBy.DISTANCE, //radius と　rankby はどちらか
+                //types:["cafe"]
+                query: plceName[valMapType]
+            };
+            
+            //placeService オブジェクトを作成し、プレイス検索を依頼する
+            var service = new google.maps.places.PlacesService(map);
+            //service.search(request, infoCallback);
+            service.textSearch(request, infoCallback);
+            
+        }
+        
+        //検索結果を受け取るコールバック関数
+        function infoCallback(results, status){
+            //応答が正常に帰ってきたら
+            if(status == google.maps.places.PlacesServiceStatus.OK){
+
+               //応答に含まれるカフェ情報を１件づつ処理する
+                for(var i=0; i < results.length; i++){
+                    var place = results[i];
+                    createMarker(place);
+                    
+                }
+            }
+        }
+
+
+               
+        
+        //カフェのマップを作成し、タップ時の動作設定を行う
+        function createMarker(place){
+            //マーカーオブジェクトの作成
+            var iconName = ["","youthhostel.png","library.png","bar.png","music_classical.png"];
+            var markerOption = {
+                position : place.geometry.location,
+                map: map,
+                icon : "images/" + iconName[valMapType]
+            };
+            var marker = new google.maps.Marker(markerOption);
+            
+            //マーカーがタップされたら店名を情報ウインドウを開く
+            google.maps.event.addListener(marker, "click", function(){
+                //表示内容を元に店名を設定
+                var info = place.name + '<br>' + place.formatted_address;
+                infoWindow.setContent(info);
+                infoWindow.open(map, marker);
+                
+            });
+        }
+        
+    </script>
+</head>
+<body>
+   <script>
+       //alert($.browser.ua);
+       //alert(numSearchResults);
+    </script>
+    <div id ="message_block">
+    <div id ="message"></div>
+    </div>
+
+    <div id ="map_canvas"></div>
+</body>
+</html>

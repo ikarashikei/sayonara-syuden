@@ -1,0 +1,48 @@
+html { 
+    height: 100% 
+}
+body { 
+    height: 100%; 
+    margin: 0px; 
+    padding: 0px 
+}
+#map_canvas { 
+    height: 100%;
+    width : 100%;
+}
+
+p.resizeimage img { width: 100%; }
+
+ a.list_ref, a:link.list_ref, a:visited.list_ref , a:hover.list_ref, a:active.list_ref 
+ {
+    color: #333 ;
+    text-decoration : none;
+    } 
+
+ a.button_ref, a:link.button_ref, a:visited.button_ref , a:hover.button_ref, a:active.button_ref
+ {
+    color: #fff ;
+    text-decoration : none;
+    } 
+
+.button_with_7 {
+    width : 8.2em;
+    margin-top : -.8em;
+}
+
+ a.map_messege, a:link.map_messege, a:visited.map_messege , a:hover.map_messege, a:active.map_messege 
+ {
+    color: #333 ;
+    text-decoration : none;
+    
+
+    font-size: 16px;
+    margin-left: 16px;
+}
+#message_block{
+    display: block;
+    height: 25px;
+    margin-top: 5px;
+}
+
+    
