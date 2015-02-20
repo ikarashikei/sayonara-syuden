@@ -1,0 +1,4 @@
+User-Agent:*
+Disallow:/index2.html
+
+Sitemap:http://syuden.com/sitemap.xml
