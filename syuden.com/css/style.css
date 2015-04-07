@@ -45,4 +45,19 @@ p.resizeimage img { width: 100%; }
     margin-top: 5px;
 }
 
-    
+.affili-banner {
+    position: relative;
+    overflow: hidden;
+}
+.affili-banner ul {
+    float: left;
+    position: relative;
+    left: 50%;
+}
+.affili-banner ul li {
+    position: relative;
+    left: -50%;
+    float: left;
+    list-style: none;
+}
+
